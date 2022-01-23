@@ -51,7 +51,7 @@ class BrainTumorDataset(mrcnn.utils.Dataset):
             img = skimage.io.imread(path[0])
             height, width = img.shape[:2]
                         
-            self.add_image("brain-tumors", image_id, path = path[0]
+            self.add_image("brain-tumors", image_id = image_id, path = path[0]
                            , bb_path = path[1], mask_path = path[2], 
                            width = width, height = height)
             image_id += 1
