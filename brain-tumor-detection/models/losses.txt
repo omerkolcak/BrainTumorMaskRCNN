@@ -1,1 +1,2 @@
 14 epoch -> 0.4147 loss
+22 epoch -> training loss : 0.3101, validation loss : 0.7579
