@@ -24,7 +24,7 @@ class BrainTumorConfig(mrcnn.config.Config):
     NUM_CLASSES = 1 + 1 # Tumor + Background 
 
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 1000 
+    STEPS_PER_EPOCH = 100 
 
 class BrainTumorDataset(mrcnn.utils.Dataset):
     
@@ -41,9 +41,9 @@ class BrainTumorDataset(mrcnn.utils.Dataset):
             mask_folder = dataset_dir + "/" + "VAL/" + "annotations/" + "masks/"
             images_folder = dataset_dir + "/" + "VAL/"
         
-        bounding_boxes = glob.glob(bb_folder + "*.txt")
-        masks = glob.glob(mask_folder + "*.txt")
-        images = glob.glob(images_folder + "*.jpg")
+        bounding_boxes = sorted(glob.glob(bb_folder + "*.txt"))
+        masks = sorted(glob.glob(mask_folder + "*.txt"))
+        images = sorted(glob.glob(images_folder + "*.jpg"))
         
         image_id = 0
         for path in zip(images,bounding_boxes,masks):
@@ -100,11 +100,11 @@ class BrainTumorDataset(mrcnn.utils.Dataset):
     
     
 train_dataset = BrainTumorDataset()        
-train_dataset.load_dataset(dataset_dir = './brain-tumor-detection', is_train = True)
+train_dataset.load_dataset(dataset_dir = './', is_train = True)
 train_dataset.prepare()
 
 validation_dataset = BrainTumorDataset()        
-validation_dataset.load_dataset(dataset_dir = './brain-tumor-detection', is_train = False)
+validation_dataset.load_dataset(dataset_dir = './', is_train = False)
 validation_dataset.prepare()
            
 tumor_config = BrainTumorConfig()
@@ -117,6 +117,8 @@ model = mrcnn.model.MaskRCNN(mode='training',
 model.load_weights(filepath='mask_rcnn_coco.h5', 
                    by_name=True, 
                    exclude=["mrcnn_class_logits", "mrcnn_bbox_fc",  "mrcnn_bbox", "mrcnn_mask"])
+
+# model.load_weights(filepath='last weight path', by_name = True)
 
 model.train(train_dataset=train_dataset, 
             val_dataset=validation_dataset, 
