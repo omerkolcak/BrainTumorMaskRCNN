@@ -38,7 +38,8 @@ pip-delete-this-directory.txt
 .vscode
 
 # Spyder
-.spyproject
+.spyproject/
+.spyproject/config
 
 # PyCharm
 .idea/
