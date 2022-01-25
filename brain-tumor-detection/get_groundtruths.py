@@ -25,7 +25,7 @@ for i in range(len(training)):
     else:
         for box in boxes:
             with open("../../Object-Detection-Metrics/BRAIN-TUMOR-DETECTION/TrainingGroundtruths/" + file_name, "a") as file:
-                line = ("tumor " + str(box[0]) + " " + str(box[1]) + " " + str(box[2]) + " " + str(box[3]) + "\n")
+                line = ("tumor " + str(box[1]) + " " + str(box[0]) + " " + str(box[3]) + " " + str(box[2]) + "\n")
                 
                 file.write(line)
                 
@@ -40,7 +40,7 @@ for i in range(len(val)):
     
     boxes = mrcnn.utils.extract_bboxes(mask)
     
-    file_name = training[i].split("\\")[1]
+    file_name = val[i].split("\\")[1]
     
     if len(boxes) == 0:
         with open("../../Object-Detection-Metrics/BRAIN-TUMOR-DETECTION/ValidationGroundtruths/" + file_name, "a") as file:
@@ -48,7 +48,7 @@ for i in range(len(val)):
     else:
         for box in boxes:
             with open("../../Object-Detection-Metrics/BRAIN-TUMOR-DETECTION/ValidationGroundtruths/" + file_name, "a") as file:
-                line = ("tumor " + str(box[0]) + " " + str(box[1]) + " " + str(box[2]) + " " + str(box[3]))
+                line = ("tumor " + str(box[1]) + " " + str(box[0]) + " " + str(box[3]) + " " + str(box[2]) + "\n")
                 
                 file.write(line)
 

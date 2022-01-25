@@ -8,6 +8,8 @@ import mrcnn.model
 import glob
 import skimage
 
+import imgaug
+
 
 CLASS_IDS = {1 : "tumor"}
 
@@ -98,9 +100,13 @@ class BrainTumorDataset(mrcnn.utils.Dataset):
         
         return mask.astype(np.bool), np.ones([mask.shape[-1]], dtype=np.int32)
     
-    
+ 
+
+
+
 
 if __name__ == 'main':
+    
     train_dataset = BrainTumorDataset()        
     train_dataset.load_dataset(dataset_dir = './', is_train = True)
     train_dataset.prepare()
@@ -110,6 +116,13 @@ if __name__ == 'main':
     validation_dataset.prepare()
                
     tumor_config = BrainTumorConfig()
+    
+    # augmentation
+    augmentation = imgaug.augmenters.OneOf([
+                        imgaug.augmenters.Fliplr(0.5),
+                        imgaug.augmenters.Flipud(0.5),
+                        imgaug.augmenters.GaussianBlur(sigma=(0.0, 5.0)),
+                    ]) 
     
     # Build the Mask R-CNN Model Architecture
     model = mrcnn.model.MaskRCNN(mode='training', 
@@ -124,6 +137,7 @@ if __name__ == 'main':
     
     model.train(train_dataset=train_dataset, 
                 val_dataset=validation_dataset, 
+                augmentation = augmentation,
                 learning_rate=tumor_config.LEARNING_RATE, 
                 epochs=1, 
                 layers='heads')
