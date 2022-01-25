@@ -99,29 +99,31 @@ class BrainTumorDataset(mrcnn.utils.Dataset):
         return mask.astype(np.bool), np.ones([mask.shape[-1]], dtype=np.int32)
     
     
-train_dataset = BrainTumorDataset()        
-train_dataset.load_dataset(dataset_dir = './', is_train = True)
-train_dataset.prepare()
 
-validation_dataset = BrainTumorDataset()        
-validation_dataset.load_dataset(dataset_dir = './', is_train = False)
-validation_dataset.prepare()
-           
-tumor_config = BrainTumorConfig()
-
-# Build the Mask R-CNN Model Architecture
-model = mrcnn.model.MaskRCNN(mode='training', 
-                             model_dir='./', 
-                             config=tumor_config)
-
-model.load_weights(filepath='mask_rcnn_coco.h5', 
-                   by_name=True, 
-                   exclude=["mrcnn_class_logits", "mrcnn_bbox_fc",  "mrcnn_bbox", "mrcnn_mask"])
-
-# model.load_weights(filepath='last weight path', by_name = True)
-
-model.train(train_dataset=train_dataset, 
-            val_dataset=validation_dataset, 
-            learning_rate=tumor_config.LEARNING_RATE, 
-            epochs=1, 
-            layers='heads')
+if __name__ == 'main':
+    train_dataset = BrainTumorDataset()        
+    train_dataset.load_dataset(dataset_dir = './', is_train = True)
+    train_dataset.prepare()
+    
+    validation_dataset = BrainTumorDataset()        
+    validation_dataset.load_dataset(dataset_dir = './', is_train = False)
+    validation_dataset.prepare()
+               
+    tumor_config = BrainTumorConfig()
+    
+    # Build the Mask R-CNN Model Architecture
+    model = mrcnn.model.MaskRCNN(mode='training', 
+                                 model_dir='./', 
+                                 config=tumor_config)
+    
+    model.load_weights(filepath='mask_rcnn_coco.h5', 
+                       by_name=True, 
+                       exclude=["mrcnn_class_logits", "mrcnn_bbox_fc",  "mrcnn_bbox", "mrcnn_mask"])
+    
+    # model.load_weights(filepath='last weight path', by_name = True)
+    
+    model.train(train_dataset=train_dataset, 
+                val_dataset=validation_dataset, 
+                learning_rate=tumor_config.LEARNING_RATE, 
+                epochs=1, 
+                layers='heads')

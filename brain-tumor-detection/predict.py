@@ -48,6 +48,8 @@ test_images = glob.glob("TEST/*.jpg")
 for image_path in train_images:
     
     image = skimage.io.imread(image_path)
+    
+    image = skimage.color.gray2rgb(image)
     r = model.detect([image],verbose=1)[0]
     
     path = image_path.split("\\")[1].split(".")[0]
@@ -59,6 +61,8 @@ for image_path in train_images:
 for image_path in val_images:
     
     image = skimage.io.imread(image_path)
+    
+    image = skimage.color.gray2rgb(image)
     r = model.detect([image],verbose=1)[0]
     
     path = image_path.split("\\")[1].split(".")[0]
@@ -70,6 +74,8 @@ for image_path in val_images:
 for image_path in test_images:
     
     image = skimage.io.imread(image_path)
+    
+    image = skimage.color.gray2rgb(image)
     r = model.detect([image],verbose=1)[0]
     
     path = image_path.split("\\")[1].split(".")[0]

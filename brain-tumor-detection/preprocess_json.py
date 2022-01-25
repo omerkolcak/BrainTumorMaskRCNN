@@ -1,5 +1,7 @@
 import json
 
+import mrcnn.model
+
 
 def json_to_txt(folder_name):
     f = open(folder_name)
