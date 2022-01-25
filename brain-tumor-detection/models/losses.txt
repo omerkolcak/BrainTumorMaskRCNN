@@ -1,5 +1,4 @@
-14 epoch -> 0.4147 loss
-22 epoch -> training loss : 0.3101, validation loss : 0.7579 (Overfitting)
+22 epoch -> training loss : 0.3101, validation loss : 0.7579, trainig mAP : 87.64%, val mAP : 48.65% (Overfitting)
 36 epoch -> training loss : 0.2389, validation loss : 0.8588 (Overfitting)
 
 

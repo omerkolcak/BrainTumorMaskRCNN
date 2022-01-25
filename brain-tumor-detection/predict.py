@@ -34,7 +34,7 @@ def write_results(bb,scores,file_path):
 
         for box,score  in zip(bb,scores):
             line = "tumor " + str(score) + " "
-            line += (str(box[0]) + " " + str(box[1]) + " " + str(box[2]) + " " + str(box[3]))
+            line += (str(box[1]) + " " + str(box[0]) + " " + str(box[3]) + " " + str(box[2]))
             line += "\n"
             
             f.write(line)   
@@ -52,7 +52,7 @@ for image_path in train_images:
     image = skimage.color.gray2rgb(image)
     r = model.detect([image],verbose=1)[0]
     
-    path = image_path.split("\\")[1].split(".")[0]
+    path = image_path.split("/")[1].split(".")[0]
     
     file = "Training/" + path + ".txt"
     
@@ -65,7 +65,7 @@ for image_path in val_images:
     image = skimage.color.gray2rgb(image)
     r = model.detect([image],verbose=1)[0]
     
-    path = image_path.split("\\")[1].split(".")[0]
+    path = image_path.split("/")[1].split(".")[0]
     
     file = "Val/" + path + ".txt"
     
@@ -78,7 +78,7 @@ for image_path in test_images:
     image = skimage.color.gray2rgb(image)
     r = model.detect([image],verbose=1)[0]
     
-    path = image_path.split("\\")[1].split(".")[0]
+    path = image_path.split("/")[1].split(".")[0]
     
     file = "Test/" + path + ".txt"
     
